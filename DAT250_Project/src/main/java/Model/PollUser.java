@@ -20,7 +20,7 @@ public class PollUser {
     @OneToMany()
     public final List<Poll> polls = new ArrayList<Poll>();
 
-    @OneToMany
+    @OneToMany()
     public final List<Vote> votes = new ArrayList<Vote>();
 
     public int getId() { return id; }
