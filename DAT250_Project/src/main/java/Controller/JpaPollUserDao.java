@@ -1,10 +1,9 @@
 package Controller;
 
 import Model.PollUser;
+import Test.JPATest;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -12,7 +11,8 @@ import java.util.function.Consumer;
 
 public class JpaPollUserDao {
 
-    private EntityManager em;
+    private EntityManagerFactory factory = Persistence.createEntityManagerFactory(JPATest.PERSISTENCE_UNIT_NAME);
+    private EntityManager em = factory.createEntityManager();
 
     public Optional<PollUser> get(int id) {
         return Optional.ofNullable(em.find(PollUser.class, id));

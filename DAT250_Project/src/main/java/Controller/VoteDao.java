@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Vote;
+import Test.JPATest;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,19 +10,20 @@ import java.util.function.Consumer;
 
 public class VoteDao {
 
-    private EntityManager entityManager;
+    private EntityManagerFactory factory = Persistence.createEntityManagerFactory(JPATest.PERSISTENCE_UNIT_NAME);
+    private EntityManager em = factory.createEntityManager();;
 
     public Optional<Vote> get(long id) {
-        return Optional.ofNullable(entityManager.find(Vote.class, id));
+        return Optional.ofNullable(em.find(Vote.class, id));
     }
 
     public List<Vote> getAll() {
-        Query query = entityManager.createQuery("SELECT e FROM Vote e");
+        Query query = em.createQuery("SELECT e FROM Vote e");
         return query.getResultList();
     }
 
     public void save(Vote vote) {
-        executeInsideTransaction(entityManager -> entityManager.persist(vote));
+        executeInsideTransaction(em -> em.persist(vote));
     }
 
     public void update(Vote vote, boolean value) {
@@ -34,10 +36,10 @@ public class VoteDao {
     }
 
     private void executeInsideTransaction(Consumer<EntityManager> action) {
-        EntityTransaction tx = entityManager.getTransaction();
+        EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
-            action.accept(entityManager);
+            action.accept(em);
             tx.commit();
         }
         catch (RuntimeException e) {
