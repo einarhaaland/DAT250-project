@@ -1,11 +1,8 @@
 package Controller;
 
 import Model.Vote;
-<<<<<<< HEAD
 import Model.VoteE;
-=======
 import Test.JPATest;
->>>>>>> origin/master
 
 import javax.persistence.*;
 import java.util.List;

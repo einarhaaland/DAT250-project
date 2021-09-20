@@ -13,6 +13,7 @@ import Controller.PollUserDao;
 
 import Controller.VoteDao;
 import Model.PollUser;
+import Model.VoteE;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -69,7 +70,7 @@ public class JPATest {
             poll.setQuestion("Knopf_");
 
             Vote vote = new Vote();
-            vote.setVote(true);
+            vote.setVote(VoteE.YES);
 
             // now persists the family person relationship
             user.polls.add(poll);
