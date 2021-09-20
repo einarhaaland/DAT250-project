@@ -15,13 +15,13 @@ public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private int id;
-    private boolean vote;
+    private VoteE vote;
 
     public int getId() { return id; }
 
     public void setId(int id) { this.id = id; }
 
-    public boolean getVote() { return vote; }
+    public VoteE getVote() { return vote; }
 
-    public void setVote(boolean vote) { this.vote = vote; }
+    public void setVote(VoteE vote) { this.vote = vote; }
 }

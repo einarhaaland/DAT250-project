@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Vote;
+import Model.VoteE;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,7 +25,7 @@ public class VoteDao {
         executeInsideTransaction(entityManager -> entityManager.persist(vote));
     }
 
-    public void update(Vote vote, boolean value) {
+    public void update(Vote vote, VoteE value) {
         vote.setVote(value);
         executeInsideTransaction(entityManager -> entityManager.merge(vote));
     }
