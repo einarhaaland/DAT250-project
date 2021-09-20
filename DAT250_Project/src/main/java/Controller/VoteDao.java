@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class Vote_controller {
+public class VoteDao {
 
     private EntityManager entityManager;
 
