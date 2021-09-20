@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Poll;
+import Test.JPATest;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,21 +11,22 @@ import java.util.function.Consumer;
 
 public class PollDao {
 
+    //private static final String PERSISTENCE_UNIT_NAME = "user";
     private static List<Poll> pollList;
-    private EntityManagerFactory factory;
+    private EntityManagerFactory factory = Persistence.createEntityManagerFactory(JPATest.PERSISTENCE_UNIT_NAME);
     private void getFactory(EntityManagerFactory fac) {
         factory = fac;
     }
 
-    private EntityManager entityManager = factory.createEntityManager();
+    private EntityManager em = factory.createEntityManager();
 
     public Optional<Poll> get(int id) {
-        return Optional.ofNullable(entityManager.find(Poll.class, id));
+        return Optional.ofNullable(em.find(Poll.class, id));
     }
 
 
     public List<Poll> getAll() {
-        Query query = entityManager.createQuery("SELECT p FROM Poll p");
+        Query query = em.createQuery("SELECT p FROM Poll p");
         return query.getResultList();
     }
 
@@ -45,10 +47,10 @@ public class PollDao {
     }
 
     private void executeInsideTransaction(Consumer<EntityManager> action) {
-        EntityTransaction tx = entityManager.getTransaction();
+        EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
-            action.accept(entityManager);
+            action.accept(em);
             tx.commit();
         }
         catch (RuntimeException e) {
