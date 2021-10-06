@@ -15,6 +15,13 @@
         <maven.compiler.target>1.9</maven.compiler.target>
     </properties>
     <dependencies>
+
+        <dependency>
+            <groupId>com.sparkjava</groupId>
+            <artifactId>spark-core</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

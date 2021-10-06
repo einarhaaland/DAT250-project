@@ -14,6 +14,11 @@ public class PollUser {
     private String username;
     private String password;
 
+    public PollUser (String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     @OneToMany()
     public final List<Poll> polls = new ArrayList<Poll>();
 

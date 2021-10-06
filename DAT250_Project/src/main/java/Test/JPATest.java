@@ -62,9 +62,7 @@ public class JPATest {
             assertTrue(users.size() == 0);
 
 
-            PollUser user = new PollUser();
-            user.setUsername("Family for the Knopfs");
-            user.setPassword("passord1");
+            PollUser user = new PollUser("Family for the Knopfs", "passord1");
 
             Poll poll = new Poll();
             poll.setQuestion("Knopf_");
