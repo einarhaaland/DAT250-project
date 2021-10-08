@@ -25,7 +25,7 @@ import java.util.List;
 
 public class JPATest {
 
-    public static final String PERSISTENCE_UNIT_NAME = "user";
+    public static final String PERSISTENCE_UNIT_NAME = "users";
     private EntityManagerFactory factory;
 
     @Before
@@ -75,7 +75,7 @@ public class JPATest {
             user.votes.add(vote);
 
             PController.save(poll);
-            VController.save(vote);
+            //VController.save(vote);
             PUController.save(user);
 
             /*

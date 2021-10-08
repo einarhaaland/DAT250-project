@@ -5,7 +5,7 @@ import java.io.IOException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.junit.runner.Request;
+//import org.junit.runner.Request;
 
 public class GetRequest {
 
@@ -14,7 +14,7 @@ public class GetRequest {
 		OkHttpClient client = new OkHttpClient();
 
 		Request request = new Request.Builder()
-		  .url("http://localhost:8080/user")
+		  .url("http://localhost:8080/users")
 		  .get()
 		  .build();
 

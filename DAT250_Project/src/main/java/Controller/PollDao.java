@@ -20,10 +20,15 @@ public class PollDao {
 
     private EntityManager em = factory.createEntityManager();
 
+/*
     public Optional<Poll> get(int id) {
         return Optional.ofNullable(em.find(Poll.class, id));
     }
+*/
 
+    public Poll get(int id) {
+        return em.find(Poll.class, id);
+    }
 
     public List<Poll> getAll() {
         Query query = em.createQuery("SELECT p FROM Poll p");
