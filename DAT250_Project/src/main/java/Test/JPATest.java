@@ -75,7 +75,7 @@ public class JPATest {
             user.votes.add(vote);
 
             PController.save(poll);
-            VController.save(vote);
+            //VController.save(vote);
             PUController.save(user);
 
             /*

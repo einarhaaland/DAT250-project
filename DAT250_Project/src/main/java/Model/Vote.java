@@ -1,5 +1,7 @@
 package Model;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,4 +26,10 @@ public class Vote {
     public VoteE getVote() { return vote; }
 
     public void setVote(VoteE vote) { this.vote = vote; }
+
+    public String toJson() {
+        Gson gson = new Gson();
+        String representation = gson.toJson(this);
+        return representation;
+    }
 }

@@ -14,8 +14,8 @@ public class JpaPollUserDao {
     private EntityManagerFactory factory = Persistence.createEntityManagerFactory(JPATest.PERSISTENCE_UNIT_NAME);
     private EntityManager em = factory.createEntityManager();
 
-    public Optional<PollUser> get(int id) {
-        return Optional.ofNullable(em.find(PollUser.class, id));
+    public PollUser get(int id) {
+        return em.find(PollUser.class, id);
     }
 
     public List<PollUser> getAll() {

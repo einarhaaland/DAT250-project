@@ -14,7 +14,7 @@ public class GetRequest {
 		OkHttpClient client = new OkHttpClient();
 
 		Request request = new Request.Builder()
-		  .url("http://localhost:8080/user")
+		  .url("http://localhost:8080/users")
 		  .get()
 		  .build();
 

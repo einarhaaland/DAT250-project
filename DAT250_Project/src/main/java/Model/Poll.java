@@ -1,5 +1,7 @@
 package Model;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,5 +29,15 @@ public class Poll {
 
     public void setQuestion(String question) { this.question = question; }
 
-    public List<Vote> getPolls() { return votes; }
+    public List<Vote> getVotes() { return votes; }
+
+    public void addVote(Vote v) {
+        votes.add(v);
+    }
+
+    public String toJson() {
+        Gson gson = new Gson();
+        String representation = gson.toJson(this);
+        return representation;
+    }
 }

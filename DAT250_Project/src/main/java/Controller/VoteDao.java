@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Poll;
 import Model.Vote;
 import Model.VoteE;
 import Test.JPATest;
@@ -23,7 +24,9 @@ public class VoteDao {
         return query.getResultList();
     }
 
-    public void save(Vote vote) {
+
+    public void save(Vote vote, Poll poll) {
+        poll.addVote(vote);
         executeInsideTransaction(em -> em.persist(vote));
     }
 
