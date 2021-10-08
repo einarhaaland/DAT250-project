@@ -5,7 +5,7 @@ import java.io.IOException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.junit.runner.Request;
+//import org.junit.runner.Request;
 
 public class GetRequest {
 

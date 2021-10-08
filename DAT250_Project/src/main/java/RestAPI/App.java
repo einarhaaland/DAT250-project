@@ -6,11 +6,18 @@ import Controller.VoteDao;
 import Model.Poll;
 import Model.PollUser;
 import Model.Vote;
+import Test.JPATest;
 import com.google.gson.Gson;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import static spark.Spark.*;
 
 public class App {
+
+    private static EntityManagerFactory factory;
 
     public static void main(String[] args) {
 
@@ -19,6 +26,12 @@ public class App {
         } else {
             port(8080);
         }
+
+        //Entity Manager TODO: lagre PUN (haha) ein anna plass enn JPATest
+        factory = Persistence.createEntityManagerFactory(JPATest.PERSISTENCE_UNIT_NAME);
+        EntityManager em = factory.createEntityManager();
+
+        //em.getTransaction().begin();
 
         //DAO instances
         PollDao pollService = new PollDao();
