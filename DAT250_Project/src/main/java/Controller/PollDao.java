@@ -43,12 +43,12 @@ public class PollDao {
 
     public void update(Poll poll, String params) {
         poll.setQuestion(Objects.requireNonNull(params, "Question cannot be null."));
-        executeInsideTransaction(entityManager -> entityManager.merge(poll));
+        executeInsideTransaction(em -> em.merge(poll));
     }
 
 
     public void delete(Poll poll) {
-        executeInsideTransaction(entityManager -> entityManager.remove(poll));
+        executeInsideTransaction(em -> em.remove(poll));
     }
 
     private void executeInsideTransaction(Consumer<EntityManager> action) {

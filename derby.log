@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Fri Oct 08 16:15:34 CEST 2021:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-017c-6042-5bca-000007896ec8 
-on database directory C:\Source\user1 with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@77556fd 
-Loaded from file:/C:/Users/Einar%20Haaland/.m2/repository/org/apache/derby/derby/10.15.2.0/derby-10.15.2.0.jar
+Sun Oct 10 14:26:36 CEST 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-017c-6a2b-538d-00000f981bc8 
+on database directory C:\Source\Poll with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@77556fd 
+Loaded from file:/C:/Users/Daniel/.m2/repository/org/apache/derby/derby/10.15.2.0/derby-10.15.2.0.jar
 java.vendor=Oracle Corporation
-java.runtime.version=11.0.12+8-LTS-237
-user.dir=C:\Users\Einar Haaland\workspace\DAT250-project
+java.runtime.version=11+28
+user.dir=C:\Users\Daniel\Desktop\DAT250-project
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0

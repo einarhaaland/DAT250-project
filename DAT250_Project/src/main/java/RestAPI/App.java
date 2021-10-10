@@ -96,9 +96,8 @@ public class App {
 
         delete("polls/:id/", (request, response) -> {
             response.type("application/json");
-            Poll p = pollService.get(Integer.parseInt(request.headers(":id")));
-            pollService.delete(p);
-            return new Gson().toJson("Successfully deleted poll: " + p.getId());
+            pollService.delete(pollService.get(Integer.parseInt(request.params(":id"))));
+            return new Gson().toJson("Successfully deleted poll: " + request.params(":id"));
         });
 
         delete("/user/:id", (request, response) -> {
