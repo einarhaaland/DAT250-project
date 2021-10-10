@@ -101,7 +101,6 @@ public class App {
             return new Gson().toJson("Successfully deleted poll: " + p.getId());
         });
 
-
         delete("/user/:id", (request, response) -> {
             response.type("application/json");
             userService.delete(userService.get(Integer.parseInt(request.params(":id"))));
@@ -109,11 +108,11 @@ public class App {
         });
 
         //UPDATE
-
         put("/users/:id", (request, response) -> {
             response.type("application/json");
             PollUser toEdit = new Gson().fromJson(request.body(), PollUser.class);
-            PollUser editedTodo = userService.update(toEdit, );
+            PollUser updated = userService.get(Integer.parseInt(request.params(":id")));
+            PollUser editedTodo = userService.update(toEdit, updated);
 
             if (editedTodo != null) {
                 return new Gson().toJsonTree(editedTodo);

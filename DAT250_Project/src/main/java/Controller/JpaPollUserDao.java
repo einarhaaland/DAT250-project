@@ -27,10 +27,15 @@ public class JpaPollUserDao {
         executeInsideTransaction(em -> em.persist(user));
     }
 
-    public void update(PollUser user, String[] params) {
-        user.setUsername(Objects.requireNonNull(params[0], "Username cannot be null"));;
-        user.setPassword(Objects.requireNonNull(params[1], "Password cannot be null"));
-        executeInsideTransaction(em -> em.merge(user));
+    public PollUser update(PollUser user, PollUser old) {
+        if (user.getUsername() != null){
+            old.setUsername(user.getUsername());
+        }
+        if (user.getPassword()!= null){
+            old.setPassword(user.getPassword());
+        }
+        executeInsideTransaction(em -> em.merge(old));
+        return old;
     }
 
     public void delete(PollUser user) {
