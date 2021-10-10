@@ -64,6 +64,14 @@ public class PollUser {
         return representation;
     }
 
+    public void addPoll(Poll poll) {
+        polls.add(poll);
+    }
+
+    public void removePoll(Poll p) {
+        polls.remove(p);
+    }
+
 
 //    public List<Poll> getPolls() { return polls; }
 

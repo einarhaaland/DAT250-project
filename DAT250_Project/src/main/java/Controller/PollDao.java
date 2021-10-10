@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Poll;
+import Model.PollUser;
 import Test.JPATest;
 
 import javax.persistence.*;
@@ -36,8 +37,10 @@ public class PollDao {
     }
 
 
-    public void save(Poll poll) {
+    public void save(Poll poll, PollUser user) {
+        user.addPoll(poll);
         executeInsideTransaction(entityManager -> entityManager.persist(poll));
+        executeInsideTransaction(em -> em.merge(user));
     }
 
 
@@ -62,5 +65,10 @@ public class PollDao {
             tx.rollback();
             throw e;
         }
+    }
+
+    public void removePoll(PollUser user, Poll p) {
+        user.removePoll(p);
+        executeInsideTransaction(em -> em.merge(user));
     }
 }

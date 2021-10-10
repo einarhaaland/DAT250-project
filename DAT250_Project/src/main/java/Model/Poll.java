@@ -40,4 +40,8 @@ public class Poll {
         String representation = gson.toJson(this);
         return representation;
     }
+
+    public void removeVote(Vote vote) {
+        votes.remove(vote);
+    }
 }

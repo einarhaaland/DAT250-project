@@ -13,6 +13,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import java.util.List;
+
 import static spark.Spark.*;
 
 public class App {
@@ -39,10 +41,11 @@ public class App {
         JpaPollUserDao userService = new JpaPollUserDao();
 
         //CREATE
-        post("/polls", (request, response) -> {
+        post("/user/:id/polls", (request, response) -> {
             response.type("application/json");
             Poll poll = new Gson().fromJson(request.body(), Poll.class);
-            pollService.save(poll);
+            PollUser user = userService.get(Integer.parseInt(request.params(":id")));
+            pollService.save(poll, user);
             return poll.toJson();
         });
 
@@ -93,10 +96,21 @@ public class App {
         });
 
         //DELETE
-
-        delete("polls/:id/", (request, response) -> {
+        delete("/polls/:id", (request, response) -> {
             response.type("application/json");
-            pollService.delete(pollService.get(Integer.parseInt(request.params(":id"))));
+            Poll poll = pollService.get(Integer.parseInt(request.params(":id")));
+            List<PollUser> list = userService.getAll();
+
+            //TODO: Erstatte med hashmap
+            for (PollUser user : list) {
+               for (Poll p : user.polls) {
+                   if (p.getId() == Integer.parseInt(request.params(":id"))) {
+                       pollService.removePoll(user, p);
+                   }
+               }
+            }
+
+            pollService.delete(poll);
             return new Gson().toJson("Successfully deleted poll: " + request.params(":id"));
         });
 
@@ -105,6 +119,14 @@ public class App {
             userService.delete(userService.get(Integer.parseInt(request.params(":id"))));
             return new Gson().toJson("Successfully delete user: " + request.params(":id"));
         });
+
+        /*
+        delete("/polls/:id/vote/:id", (request, response) -> {
+           response.type("application/json");
+           Poll p = pollService.get(Integer.parseInt(request.params(":id")));
+           voteService.delete(voteService.get(Integer.parseInt(request.params(":id"))), p);
+           return new Gson().toJson("Successfully delete vote: " + request.params(":id"));
+        }); */
 
         //UPDATE
         put("/users/:id", (request, response) -> {

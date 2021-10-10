@@ -15,19 +15,21 @@ public class VoteDao {
     private EntityManagerFactory factory = Persistence.createEntityManagerFactory(JPATest.PERSISTENCE_UNIT_NAME);
     private EntityManager em = factory.createEntityManager();;
 
-    public Optional<Vote> get(long id) {
+    /*public Optional<Vote> get(long id) {
         return Optional.ofNullable(em.find(Vote.class, id));
-    }
+    } */
 
     public List<Vote> getAll() {
         Query query = em.createQuery("SELECT e FROM Vote e");
         return query.getResultList();
     }
 
+    public Vote get(int id) { return em.find(Vote.class, id);}
 
     public void save(Vote vote, Poll poll) {
         poll.addVote(vote);
         executeInsideTransaction(em -> em.persist(vote));
+        executeInsideTransaction(em -> em.merge(poll));
     }
 
     public void update(Vote vote, VoteE value) {
@@ -35,8 +37,10 @@ public class VoteDao {
         executeInsideTransaction(entityManager -> entityManager.merge(vote));
     }
 
-    public void delete(Vote vote) {
+    public void delete(Vote vote, Poll poll) {
+        poll.removeVote(vote);
         executeInsideTransaction(entityManager -> entityManager.remove(vote));
+        executeInsideTransaction(em -> em.merge(poll));
     }
 
     private void executeInsideTransaction(Consumer<EntityManager> action) {
