@@ -31,7 +31,7 @@ public class App {
         factory = Persistence.createEntityManagerFactory(JPATest.PERSISTENCE_UNIT_NAME);
         EntityManager em = factory.createEntityManager();
 
-        //em.getTransaction().begin();
+        em.getTransaction().begin();
 
         //DAO instances
         PollDao pollService = new PollDao();
@@ -92,13 +92,28 @@ public class App {
             return new Gson().toJsonTree(p.getVotes());
         });
 
+        //DELETE
+
+        delete("polls/:id/", (request, response) -> {
+            response.type("application/json");
+            Poll p = pollService.get(Integer.parseInt(request.headers(":id")));
+            pollService.delete(p);
+            return new Gson().toJson("Successfully deleted poll: " + p.getId());
+        });
+
+
+        delete("/user/:id", (request, response) -> {
+            response.type("application/json");
+            userService.delete(userService.get(Integer.parseInt(request.params(":id"))));
+            return new Gson().toJson("Successfully delete user: " + request.params(":id"));
+        });
 
         //UPDATE
-        /*
+
         put("/users/:id", (request, response) -> {
             response.type("application/json");
             PollUser toEdit = new Gson().fromJson(request.body(), PollUser.class);
-            PollUser editedTodo = userService.update(toEdit);
+            PollUser editedTodo = userService.update(toEdit, );
 
             if (editedTodo != null) {
                 return new Gson().toJsonTree(editedTodo);
@@ -106,14 +121,10 @@ public class App {
                 return new Gson().toJson(" not found or error in edit");
             }
         });
-        */
 
-        //DELETE
-        delete("/user/:id", (request, response) -> {
-            response.type("application/json");
-            userService.delete(userService.get(Integer.parseInt(request.params(":id"))));
-            return new Gson().toJson("user deleted");
-        });
+
+
+        em.close();
 
     }
 
