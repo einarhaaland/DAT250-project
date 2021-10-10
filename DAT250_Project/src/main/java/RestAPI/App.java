@@ -113,7 +113,8 @@ public class App {
         put("/users/:id", (request, response) -> {
             response.type("application/json");
             PollUser toEdit = new Gson().fromJson(request.body(), PollUser.class);
-            PollUser editedTodo = userService.update(toEdit, );
+            PollUser updated = userService.get(Integer.parseInt(request.params(":id")));
+            PollUser editedTodo = userService.update(toEdit, updated);
 
             if (editedTodo != null) {
                 return new Gson().toJsonTree(editedTodo);
