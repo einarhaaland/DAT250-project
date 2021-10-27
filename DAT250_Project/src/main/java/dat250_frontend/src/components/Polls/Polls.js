@@ -1,12 +1,10 @@
 import React from "react";
 
-export function Polls() {
-
+export function Polls(props) {
     return (
         <div>
-            <CreatePoll />
+            <CreatePoll {...props} />
             <SearchPoll />
         </div>
-
     )
 }
