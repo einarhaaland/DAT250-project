@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-export function CreatePoll(props) {
+export default function CreatePoll(props) {
     const [question, setQuestion] = useState("");
     const user = props.user;
 
