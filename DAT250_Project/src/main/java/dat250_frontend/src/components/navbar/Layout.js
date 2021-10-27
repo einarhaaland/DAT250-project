@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
-import { NavMenu } from './NavMenu';
+import NavMenu from './NavMenu';
 
-export class Layout extends Component {
+export default class Layout extends Component {
   static displayName = Layout.name;
 
   constructor(props){
@@ -18,7 +18,7 @@ export class Layout extends Component {
   render () {
     return (
       <div>
-        <NavMenu currentUser={this.props.currentUser} handleLoutout={this.props.handleLogout}/>
+        <NavMenu />
         <Container>
           {this.props.children}
         </Container>
