@@ -1,8 +1,9 @@
-import { Collapse } from "bootstrap";
 import { React, Component } from "react";
+import { Collapse, Container, Navbar, NavbarToggler, NavItem, NavLink} from 'reactstrap';
+import { Link } from 'react-router-dom';
 import './NavMenu.css';
 
-export class NavMenu extends Component {
+export default class NavMenu extends Component {
     static displayName = NavMenu.name
 
     constructor (props) {
@@ -27,25 +28,21 @@ export class NavMenu extends Component {
 
         return (
             <header>
-                <NavBar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
+                <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
                     <Container>
-                        <NavItem tag={Link} to="/" className="text-light">Home</NavItem>
                         <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
                         <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
                             <ul className="navbar-nav flex-grow">
                                 <NavItem>
-                                    <NavLink>Polls</NavLink>
+                                    <NavLink tag={Link} className="text-light" to="/">Polls</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink>Profile</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    
+                                    <NavLink tag={Link} className="text-light" to="/profile">Profile</NavLink>
                                 </NavItem>
                             </ul>
                         </Collapse>
                     </Container>
-                </NavBar>
+                </Navbar>
             </header>
         )
     }
