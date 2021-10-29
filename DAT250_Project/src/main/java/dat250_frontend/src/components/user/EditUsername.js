@@ -1,6 +1,6 @@
 import React from 'react'
 
-export function EditUsername() {
+export default function EditUsername() {
     return (
         <div>
             <h2>Change Username</h2>

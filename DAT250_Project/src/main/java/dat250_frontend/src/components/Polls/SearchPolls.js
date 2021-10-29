@@ -5,11 +5,13 @@ import { useState } from "react";
 export default function SearchPolls() {
     const [id, setId] = useState("");
 
+    const history = useHistory()
+
     const handleSubmit = async () => {
         await fetch('/polls/' + id)
             .then((response) => {
                 if (response.ok) {
-                    useHistory().push('/vote/' + id);
+                    history.push('/vote/' + id);
                 }
                 else {
                     //throw error
