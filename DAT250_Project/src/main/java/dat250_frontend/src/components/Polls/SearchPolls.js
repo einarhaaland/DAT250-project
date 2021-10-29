@@ -7,16 +7,18 @@ export default function SearchPolls() {
 
     const history = useHistory()
 
-    const handleSubmit = async () => {
-        await fetch('/polls/' + id)
-            .then((response) => {
-                if (response.ok) {
-                    history.push('/vote/' + id);
-                }
-                else {
-                    //throw error
-                }
+    const [question, setQuestion] = useState([])
+
+    const handleSubmit = () => {
+        fetch(`/polls/${id}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setQuestion(data.question)
             })
+        if (question !== "") history.push('/polls/' + id);
+
+        //if (res.status > 199 && res.status < 300) history.push('/polls/' + id);
+
     }
 
     return (
