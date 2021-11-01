@@ -19,16 +19,15 @@ export default function CreatePoll(props) {
         <div>
             <div>
                 <h2>Create new poll</h2>
-                <form onSubmit={handleSubmit}>
-                    <label>Poll Question:
-                        <input 
-                            type="text" 
-                            name="question" 
-                            value= {question}
-                            onChange={(e) => setQuestion(e.target.value)}
-                            />
-                    </label>
-                    <input type="submit" />
+                <form>
+                    <input 
+                        type="text" 
+                        name="question"
+                        placeholder="Poll Question" 
+                        value= {question}
+                        onChange={(e) => setQuestion(e.target.value)}
+                        />
+                    <button type="button" onClick={handleSubmit}>Submit</button>
                 </form>
             </div>
         </div>
