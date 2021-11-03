@@ -18,11 +18,31 @@ export default function Vote() {
         polls();
     })
 
+    const handleSubmit = (vote) => (event) => {
+
+        event.preventDefault();
+        fetch(`/polls/${id}/votes`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ vote: vote })
+        })
+
+    }
+
     return (
         <div>
             <h1>{question}</h1>
-            <button type="submit">YES</button>
-            <button type="submit">NO</button>
+            <button
+                onClick={handleSubmit("YES")}
+                type="submit">
+                YES
+            </button>
+            <button
+                onClick={handleSubmit("NO")}
+                type="submit">
+                NO
+            </button>
         </div>
     )
 }
