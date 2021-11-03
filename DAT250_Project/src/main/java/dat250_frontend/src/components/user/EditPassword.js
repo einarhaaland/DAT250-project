@@ -5,17 +5,14 @@ export default function EditPassword(props) {
     const [password, setPassword] = useState("");
     const [repeat, setRepeat] = useState("");
     const user = props.user;
-    //var first, repeat = null;
-    console.log(props.toString());
     const handleSubmit = () => {
 
         if (password === repeat) {
 
-            console.log("fetching...")
-            fetch("/users/51", {
+            //TODO: make sure this works
+            fetch("/users/" + user.id, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                //credentials: 'include',
                 body: JSON.stringify({password: repeat})
             })
 
