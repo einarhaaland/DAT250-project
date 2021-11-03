@@ -7,7 +7,7 @@ export default function User(props) {
     return (
         <div>
             <EditUsername {...props} />
-            <EditPassword />
+            <EditPassword {...props} />
             <UserPolls />
         </div>
     )
