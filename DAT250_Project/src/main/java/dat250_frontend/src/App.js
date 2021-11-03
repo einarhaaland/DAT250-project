@@ -20,7 +20,7 @@ export default class App extends Component {
     }
   }
 
-  handleLogin(user){
+  handleLogin(user) {
     this.setState({
       loggedInStatus: true,
       currentUser: user
@@ -30,32 +30,32 @@ export default class App extends Component {
 
   render() {
 
-  
-  return (
-    <Router>
-    <Layout>
 
-      <Route 
-            exact 
+    return (
+      <Router>
+        <Layout>
+
+          <Route
+            exact
             path={'/'}
-            render = {props => (
+            render={props => (
               <Polls {...props} />
             )}
-      />
-      
-      <Route 
-            exact 
-            path={'/profile'}
-            render = {props => (
-              <User {...props} />
+          />
+
+          <Route
+            exact
+            path={'/profile/:id'}
+            render={() => (
+              <User user={this.state.currentUser} />
             )}
-      />
+          />
 
-      <Route path={'/polls/:id'} component={Vote} />
+          <Route path={'/polls/:id'} component={Vote} />
 
-    </Layout>
-    </Router>
-  );
+        </Layout>
+      </Router>
+    );
   }
 
 }
