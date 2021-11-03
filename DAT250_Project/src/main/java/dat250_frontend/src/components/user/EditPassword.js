@@ -2,19 +2,24 @@ import React from 'react';
 import { useState } from 'react';
 
 export default function EditPassword(props) {
-    const [user, password] = useState("");
+    const [password, setPassword] = useState("");
+    const [repeat, setRepeat] = useState("");
     const user = props.user;
-    var fname, lname = null;
-
+    //var first, repeat = null;
+    console.log(props.toString());
     const handleSubmit = () => {
-        if(fname == lname){
-            fetch("/user/" + user.id, {
-                method: 'POST',
-                headers: {'Content-Type': 'applicaiton/json'},
-                credentials: 'include',
-                body: JSON.stringify(lname)
+
+        if (password === repeat) {
+
+            console.log("fetching...")
+            fetch("/users/51", {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                //credentials: 'include',
+                body: JSON.stringify({password: repeat})
             })
-        }else{
+
+        } else {
             console.log("Passwords are not equal");
         }
     }
@@ -23,10 +28,22 @@ export default function EditPassword(props) {
         <div>
             <h2>Change Password</h2>
             <form onSubmit={handleSubmit}>
-                <label for="fname">New Password:</label>
-                <input type="text" id="fname" name="fname" value={fname} />
-                <label for="lname">Repeat:</label>
-                <input type="text" id="lname" name="lname" value={lname} />
+                <label >New Password:
+                    <input 
+                    type="password" 
+                    name="password" 
+                    value={password}
+                    onChange = {(e) => setPassword(e.target.value)}
+                    />
+                </label>
+                <label >Repeat:
+                    <input 
+                    type="password" 
+                    name="repeat"
+                    value={repeat}
+                    onChange = {(e) => setRepeat(e.target.value)}
+                    />
+                </label>
                 <button type="submit">Submit</button>
             </form>
         </div>

@@ -5,10 +5,12 @@ export default function EditUsername() {
         <div>
             <h2>Change Username</h2>
             <form>
-                <label for="fname">New Email:</label>
-                <input type="text" id="fname" name="fname" />
-                <label for="lname">Repeat:</label>
-                <input type="text" id="lname" name="lname" />
+                <label >New Email:
+                    <input type="text" id="fname" name="fname" />
+                </label>
+                <label >Repeat:
+                    <input type="text" id="lname" name="lname" />
+                </label>
                 <button type="submit">Submit</button>
             </form>
         </div>
