@@ -1,14 +1,46 @@
-import React from 'react'
+import React from 'react';
+import { useState } from 'react';
 
-export default function EditPassword() {
+export default function EditPassword(props) {
+    const [password, setPassword] = useState("");
+    const [repeat, setRepeat] = useState("");
+    const user = props.user;
+    const handleSubmit = () => {
+
+        if (password === repeat) {
+
+            //TODO: make sure this works
+            fetch("/users/" + user.id, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({password: repeat})
+            })
+
+        } else {
+            console.log("Passwords are not equal");
+        }
+    }
+
     return (
         <div>
             <h2>Change Password</h2>
-            <form>
-                <label for="fname">New Password:</label>
-                <input type="text" id="fname" name="fname" />
-                <label for="lname">Repeat:</label>
-                <input type="text" id="lname" name="lname" />
+            <form onSubmit={handleSubmit}>
+                <label >New Password:
+                    <input 
+                    type="password" 
+                    name="password" 
+                    value={password}
+                    onChange = {(e) => setPassword(e.target.value)}
+                    />
+                </label>
+                <label >Repeat:
+                    <input 
+                    type="password" 
+                    name="repeat"
+                    value={repeat}
+                    onChange = {(e) => setRepeat(e.target.value)}
+                    />
+                </label>
                 <button type="submit">Submit</button>
             </form>
         </div>

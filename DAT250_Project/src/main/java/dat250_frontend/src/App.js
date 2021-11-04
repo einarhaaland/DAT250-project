@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import Polls from './components/Polls/Polls'
 import User from './components/user/User'
+import Vote from './components/Vote'
 import Layout from './components/navbar/Layout'
 import Login from './components/login/Login'
 import Register from './components/login/Register'
@@ -21,7 +22,7 @@ export default class App extends Component {
     }
   }
 
-  handleLogin(user){
+  handleLogin(user) {
     this.setState({
       loggedInStatus: true,
       currentUser: user
@@ -37,37 +38,35 @@ export default class App extends Component {
   }
 
   render() {
-
-  
-  return (
-    <Router>
-    <Layout>
-
-      <Route 
+    return (
+      <Router>
+        <Layout>
+            <Route 
               exact
               path='/login'
               render = {props => (
               <Login {...props} handleLogin={this.handleLogin} handleLogout={this.handleLogout}/>
               )}
-      />
+            />
 
-      <Route 
-            exact 
-            path={'/'}
-            render = {props => (
-              <Polls {...props} />
-            )}
-      />
-      
-      <Route 
-            exact 
-            path={'/profile'}
-            render = {props => (
-              <User {...props} />
-            )}
-      />
+            <Route 
+              exact 
+              path={'/'}
+              render={props => (
+                <Polls {...props} />
+              )}
+            />
 
-      <Route path='/register' component={Register}/>
+          <Route
+            exact
+            path={'/profile/:id'}
+            render={() => (
+              <User user={this.state.currentUser} />
+            )}
+          />
+
+          <Route path={'/polls/:id'} component={Vote} />
+          <Route path='/register' component={Register}/>
     </Layout>
     </Router>
   );

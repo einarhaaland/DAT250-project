@@ -4,25 +4,26 @@ import { useState } from "react";
 
 export default function SearchPolls() {
     const [id, setId] = useState("");
-
     const history = useHistory()
+    const [question, setQuestion] = useState([])
 
-    const handleSubmit = async () => {
-        await fetch('/polls/' + id)
-            .then((response) => {
-                if (response.ok) {
-                    history.push('/vote/' + id);
-                }
-                else {
-                    //throw error
-                }
+    const handleSubmit = () => {
+        fetch(`/polls/${id}`)
+            .then((response) => response.json())
+            .then((data) => {
+                if (data == null) return
+                setQuestion(data.question)
             })
+        if (!(question === undefined || question.length === 0)) {
+            history.push('/polls/' + id);
+        }
+
     }
 
     return (
         <div>
             <h2>Search for poll</h2>
-            <form onSubmit={handleSubmit}>
+            <form>
                 <input 
                     type="text"  
                     name="id" 
@@ -30,7 +31,7 @@ export default function SearchPolls() {
                     value={id}
                     onChange={(e) => setId(e.target.value)}
                 />
-                <input type="submit" />
+                <button type="button" onClick={handleSubmit}>Submit</button>
             </form>
         </div>
     )

@@ -3,11 +3,11 @@ import EditPassword from "./EditPassword";
 import EditUsername from "./EditUsername";
 import UserPolls from "./UserPolls";
 
-export default function User() {
+export default function User(props) {
     return (
         <div>
-            <EditUsername />
-            <EditPassword />
+            <EditUsername {...props} />
+            <EditPassword {...props} />
             <UserPolls />
         </div>
     )
