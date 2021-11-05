@@ -5,12 +5,12 @@ import { useParams } from "react-router";
 export default function Vote() {
     const { id } = useParams();
 
-    const [question, setQuestion] = useState([])
+    const [poll, setPoll] = useState([])
     const polls = async () => {
         await fetch(`/polls/${id}`)
             .then((response) => response.json())
             .then((data) => {
-                setQuestion(data.question)
+                setPoll(data)
             })
     }
 
@@ -29,20 +29,41 @@ export default function Vote() {
         })
 
     }
+    
 
     return (
         <div>
-            <h1>{question}</h1>
-            <button
-                onClick={handleSubmit("YES")}
-                type="submit">
-                YES
-            </button>
-            <button
-                onClick={handleSubmit("NO")}
-                type="submit">
-                NO
-            </button>
+            <div>
+                <h1>{poll.question}</h1>
+                <button
+                    onClick={handleSubmit("YES")}
+                    type="submit">
+                    YES
+                </button>
+                <button
+                    onClick={handleSubmit("NO")}
+                    type="submit">
+                    NO
+                </button>
+            </div>
+            <div>
+                <br /><br /><br />
+                <h3>Results</h3>
+                <table className='table table-sm'>
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Total votes:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>YES: %</td>
+                            <td>NO: %</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
         </div>
     )
 }
