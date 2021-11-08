@@ -13,7 +13,7 @@ export default function CreatePoll(props) {
         let yesVotes = 0;
         let noVotes = 0;
 
-        fetch(`/polls/1/votes`)
+        fetch(`/polls/${pollId}/votes`)
             .then((response) => response.json())
             .then((data) => {  
                 for (var i = 0; i < data.length; i++) {
