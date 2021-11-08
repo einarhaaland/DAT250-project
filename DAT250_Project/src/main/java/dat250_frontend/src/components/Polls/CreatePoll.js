@@ -5,12 +5,36 @@ export default function CreatePoll(props) {
     const [question, setQuestion] = useState("");
     const user = props.user;
 
-    const handlePollResults = () => {
+    const handlePollResults = (pollId) => {
         //send result to dweet.io
         //To dweet from your thing, simply call a URL like:https://dweet.io/dweet/for/my-thing-name?hello=world
             //Just replace my-thing-name with a unique name. That's it!
         //To read the latest dweet for a thing, you can call...https://dweet.io/get/dweets/for/my-thing-name
-        
+        let yesVotes = 0;
+        let noVotes = 0;
+
+        fetch(`/polls/${pollId}/votes`)
+            .then((response) => response.json())
+            .then((data) => {  
+                for (var i = 0; i < data.length; i++) {
+                    console.log("inni loop");
+                    if (data[i].vote === "YES") yesVotes++;
+                    else noVotes++;
+                }
+            })
+            .then(() => {
+                fetch("https://dweet.io/dweet/for/dat250poller?" + question, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        "Yes": yesVotes,
+                        "No": noVotes
+                    })
+                })
+            })
+
+        //https://dweet.io/get/dweets/for/dat250poller
+
         //do some messaging system things
     }
 
@@ -22,8 +46,8 @@ export default function CreatePoll(props) {
             body: JSON.stringify({question: question})
         })
             .then(resp => resp.json())
-            .then(() => {
-                setTimeout( function() { handlePollResults(); }, 10000); //time in ms
+            .then((data) => {
+                setTimeout( function() { handlePollResults(data.id); }, 1000*60); //time in ms
             })
     }
     
