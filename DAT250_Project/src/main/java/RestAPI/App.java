@@ -6,13 +6,16 @@ import Controller.VoteDao;
 import Model.Poll;
 import Model.PollUser;
 import Model.Vote;
+import Model.VoteE;
 import Test.JPATest;
 import com.google.gson.Gson;
+import com.mongodb.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import java.net.UnknownHostException;
 import java.util.List;
 
 import static spark.Spark.*;
@@ -110,11 +113,11 @@ public class App {
 
             //TODO: Erstatte med hashmap
             for (PollUser user : list) {
-               for (Poll p : user.polls) {
-                   if (p.getId() == Integer.parseInt(request.params(":id"))) {
-                       pollService.removePoll(user, p);
-                   }
-               }
+                for (Poll p : user.polls) {
+                    if (p.getId() == Integer.parseInt(request.params(":id"))) {
+                        pollService.removePoll(user, p);
+                    }
+                }
             }
 
             pollService.delete(poll);
@@ -149,7 +152,37 @@ public class App {
             }
         });
 
+/*
+        try {
+            // Create new instance of mongoclient
+            MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
 
+            // get and/or create db and collection
+            DB database = mongoClient.getDB("PollResults");
+            DBCollection collection = database.getCollection("Results");
+
+            post("/polls/:id/votes", (request, response) -> {
+                response.type("application/json");
+                Vote vote = new Gson().fromJson(request.body(), Vote.class);
+
+
+                if (vote.getVote() == VoteE.YES) {
+                    collection.update();
+                } else if (vote.getVote() == VoteE.NO) {
+                    collection.update();
+                }
+                //DBObject object = new BasicDBObject("_id", voteId)
+
+
+                return collection.insert(object);
+
+            });
+
+
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+*/
 
         em.close();
 
