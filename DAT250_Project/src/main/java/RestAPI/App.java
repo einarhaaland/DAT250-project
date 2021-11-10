@@ -13,15 +13,21 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import java.util.List;
 
 import static spark.Spark.*;
 
+//@SpringBootApplication
 public class App {
 
     private static EntityManagerFactory factory;
 
     public static void main(String[] args) {
+
+        //SpringApplication.run(App.class, args);
 
         if (args.length > 0) {
             port(Integer.parseInt(args[0]));
