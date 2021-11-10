@@ -26,10 +26,11 @@ public class VoteDao {
 
     public Vote get(int id) { return em.find(Vote.class, id);}
 
-    public void save(Vote vote, Poll poll) {
+    public Vote save(Vote vote, Poll poll) {
         poll.addVote(vote);
         executeInsideTransaction(em -> em.persist(vote));
         executeInsideTransaction(em -> em.merge(poll));
+        return vote;
     }
 
     public void update(Vote vote, VoteE value) {

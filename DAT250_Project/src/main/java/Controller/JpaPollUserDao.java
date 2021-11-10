@@ -23,8 +23,10 @@ public class JpaPollUserDao {
         return query.getResultList();
     }
 
-    public void save(PollUser user) {
+    public PollUser save(PollUser user) {
+
         executeInsideTransaction(em -> em.persist(user));
+        return user;
     }
 
     public PollUser update(PollUser user, PollUser old) {
@@ -38,8 +40,8 @@ public class JpaPollUserDao {
         return old;
     }
 
-    public void delete(PollUser user) {
-        executeInsideTransaction(em -> em.remove(user));
+    public void delete(int id) {
+        executeInsideTransaction(em -> em.remove(id));
     }
 
     private void executeInsideTransaction(Consumer<EntityManager> action) {

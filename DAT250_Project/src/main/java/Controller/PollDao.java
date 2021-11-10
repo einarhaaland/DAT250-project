@@ -37,10 +37,11 @@ public class PollDao {
     }
 
 
-    public void save(Poll poll, PollUser user) {
+    public Poll save(Poll poll, PollUser user) {
         user.addPoll(poll);
         executeInsideTransaction(entityManager -> entityManager.persist(poll));
         executeInsideTransaction(em -> em.merge(user));
+        return poll;
     }
 
 

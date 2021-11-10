@@ -20,14 +20,11 @@ import java.util.List;
 
 import static spark.Spark.*;
 
-//@SpringBootApplication
 public class App {
 
     private static EntityManagerFactory factory;
 
     public static void main(String[] args) {
-
-        //SpringApplication.run(App.class, args);
 
         if (args.length > 0) {
             port(Integer.parseInt(args[0]));
@@ -122,7 +119,7 @@ public class App {
 
         delete("/user/:id", (request, response) -> {
             response.type("application/json");
-            userService.delete(userService.get(Integer.parseInt(request.params(":id"))));
+            userService.delete((Integer.parseInt(request.params(":id"))));
             return new Gson().toJson("Successfully delete user: " + request.params(":id"));
         });
 

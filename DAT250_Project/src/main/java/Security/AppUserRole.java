@@ -6,10 +6,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import Security.AppUserPermission.*;
 
 public enum AppUserRole {
-    POLLUSER(Sets.newHashSet(POLLUSER_READ, POLLUSER_WRITE));
+
+   POLLUSER(Sets.newHashSet(AppUserPermission.POLLUSER_READ, AppUserPermission.POLLUSER_WRITE));
 
     private final Set<AppUserPermission> permission;
 
@@ -18,10 +18,6 @@ public enum AppUserRole {
     }
 
     public Set<AppUserPermission> getPermission() {
-        return permission;
-    }
-
-    public Set<AppUserPermission> getPermissions() {
         return permission;
     }
 

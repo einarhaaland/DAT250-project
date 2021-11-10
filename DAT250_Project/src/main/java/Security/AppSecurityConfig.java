@@ -3,6 +3,7 @@ package Security;
 //import Auth.ApplicationUserService;
 //import jwt.JwtTokenVerifier;
 //import jwt.JwtUsernameAndPasswordAuthenticationFilter;
+import Auth.ApplicationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
