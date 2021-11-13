@@ -1,5 +1,6 @@
 package Test;
 
+import static Globals.Globals.PERSISTENCE_UNIT_NAME;
 import static org.junit.Assert.assertTrue;
 
 import javax.persistence.EntityManager;
@@ -12,6 +13,7 @@ import Controller.PollDao;
 import Controller.PollUserDao;
 
 import Controller.VoteDao;
+import Globals.Globals;
 import Model.PollUser;
 import Model.VoteE;
 import org.junit.Before;
@@ -25,7 +27,7 @@ import java.util.List;
 
 public class JPATest {
 
-    public static final String PERSISTENCE_UNIT_NAME = "users";
+    //public static final String PERSISTENCE_UNIT_NAME = "users";
     private EntityManagerFactory factory;
 
     @Before

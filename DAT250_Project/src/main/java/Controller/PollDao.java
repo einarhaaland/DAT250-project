@@ -1,5 +1,6 @@
 package Controller;
 
+import Globals.Globals;
 import Model.Poll;
 import Model.PollUser;
 import Test.JPATest;
@@ -10,11 +11,13 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import static Globals.Globals.PERSISTENCE_UNIT_NAME;
+
 public class PollDao {
 
     //private static final String PERSISTENCE_UNIT_NAME = "user";
     private static List<Poll> pollList;
-    private EntityManagerFactory factory = Persistence.createEntityManagerFactory(JPATest.PERSISTENCE_UNIT_NAME);
+    private EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
     private void getFactory(EntityManagerFactory fac) {
         factory = fac;
     }

@@ -10,9 +10,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import static Globals.Globals.PERSISTENCE_UNIT_NAME;
+
 public class VoteDao {
 
-    private EntityManagerFactory factory = Persistence.createEntityManagerFactory(JPATest.PERSISTENCE_UNIT_NAME);
+    private EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
     private EntityManager em = factory.createEntityManager();;
 
     /*public Optional<Vote> get(long id) {

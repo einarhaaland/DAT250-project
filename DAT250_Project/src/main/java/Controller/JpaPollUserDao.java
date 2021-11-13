@@ -9,9 +9,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import static Globals.Globals.PERSISTENCE_UNIT_NAME;
+
 public class JpaPollUserDao {
 
-    private EntityManagerFactory factory = Persistence.createEntityManagerFactory(JPATest.PERSISTENCE_UNIT_NAME);
+    private EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
     private EntityManager em = factory.createEntityManager();
 
     public PollUser get(int id) {
