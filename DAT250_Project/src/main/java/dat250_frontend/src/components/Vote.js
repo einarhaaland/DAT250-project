@@ -7,7 +7,7 @@ export default function Vote() {
 
     const [question, setQuestion] = useState([])
     const polls = async () => {
-        await fetch(`/polls/${id}`)
+        await fetch(`/poll/${id}`)
             .then((response) => response.json())
             .then((data) => {
                 setQuestion(data.question)

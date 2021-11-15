@@ -8,11 +8,12 @@ export default function SearchPolls() {
     const [question, setQuestion] = useState([])
 
     const handleSubmit = () => {
-        fetch(`/polls/${id}`)
+        fetch(`/poll/${id}`)
             .then((response) => response.json())
             .then((data) => {
                 if (data == null) return
                 setQuestion(data.question)
+                console.log(data)
             })
         if (!(question === undefined || question.length === 0)) {
             history.push('/polls/' + id);
