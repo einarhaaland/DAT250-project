@@ -40,7 +40,7 @@ public class Messaging {
         client.publish(topic, message);
 
         client.disconnect();
-        
+
     }
 
 }
