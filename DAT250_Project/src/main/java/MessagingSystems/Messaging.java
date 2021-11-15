@@ -13,24 +13,29 @@ import java.nio.charset.StandardCharsets;
  * TODO: Change all of the variables to the needed ones for mqtt and mongodb to work
  */
 // TODO: rename file to something better
+// Sender
 public class Messaging {
 
     //TODO: Not certain of these variables just yet
-    private String topic = "/data/" + "preferredChannelAccordingToATutorial";
-    private int qos = 1;
+    private static String topic = "/data/" + "preferredChannelAccordingToATutorial";
+    private static int qos = 1;
 
     //Other variables
-    private String connectionURI = "URI to the mongoDB i guess?";
-    private String username = "username";
-    private String password = "password";
+    private static String connectionURI = "tcp://localhost:8080";
+    private static String username = "username";
+    private static String password = "password";
 
-    public void MQTTPublishMessage(Result result) throws MqttException {
+    public static void MQTTPublishMessage(Result result) throws MqttException {
 
         MqttClient client = new MqttClient(connectionURI, MqttClient.generateClientId());
         MqttConnectOptions cOptions = new MqttConnectOptions();
+
+        /*
         cOptions.setCleanSession(true);
         cOptions.setUserName(username);
         cOptions.setPassword(password.toCharArray());
+
+         */
 
         //Start Connecting to Broker
         client.connect(cOptions);
