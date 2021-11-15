@@ -3,10 +3,13 @@ package RestAPI;
 import Controller.JpaPollUserDao;
 import Controller.PollDao;
 import Controller.VoteDao;
+import MessagingSystems.Messaging;
 import Model.*;
 import Test.JPATest;
 import com.google.gson.Gson;
 import com.mongodb.*;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.internal.wire.MqttPublish;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -21,6 +24,7 @@ import static spark.Spark.*;
 public class App {
 
     private static EntityManagerFactory factory;
+    private static Messaging messaging;
 
     public static void main(String[] args) {
 
@@ -28,6 +32,13 @@ public class App {
             port(Integer.parseInt(args[0]));
         } else {
             port(8080);
+        }
+
+        Result result = new Result(1, 23, 4);
+        try {
+            messaging.MQTTPublishMessage(result);
+        } catch (MqttException e) {
+            e.printStackTrace();
         }
 
         //Entity Manager
@@ -80,10 +91,11 @@ public class App {
          * Q: Kan vi lage knapp i frontend som sender json representasjon av poll resultat?
          *
          */
-        post("/results", (request, response) -> {
+        post("/results/:id", (request, response) -> {
             response.type("application/json");
-            Result result = new Gson().fromJson(request.body(), Result.class);
 
+            Result r = new Gson().fromJson(request.body(), Result.class);
+            messaging.MQTTPublishMessage(r);
 
 
             return result.toJson();
