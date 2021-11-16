@@ -14,6 +14,7 @@ import Controller.PollUserDao;
 import Controller.VoteDao;
 import Model.PollUser;
 import Model.VoteE;
+import Security.AppUserRole;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,7 +63,7 @@ public class JPATest {
             assertTrue(users.size() == 0);
 
 
-            PollUser user = new PollUser("Family for the Knopfs", "passord1");
+            PollUser user = new PollUser("Family for the Knopfs", "passord1", AppUserRole.POLLUSER);
 
             Poll poll = new Poll();
             poll.setQuestion("Knopf_");
@@ -78,11 +79,11 @@ public class JPATest {
             //VController.save(vote);
             PUController.save(user);
 
-            /*
+
             em.persist(user);
             em.persist(vote);
             em.persist(poll);
-            */
+
 
         }
 
@@ -108,25 +109,6 @@ public class JPATest {
 
         // We should have 40 Persons in the database TODO: changed to 1 due to the program only creating one new entry
         assertTrue(q.getResultList().size() >= 1);
-
-        em.close();
-    }
-
-
-
-    @Test(expected = javax.persistence.NoResultException.class) //TODO: korleis funker denne?
-    public void deletePerson() {
-        EntityManager em = factory.createEntityManager();
-        // Begin a new local transaction so that we can persist a new entity
-        em.getTransaction().begin();
-        Query q = em
-                .createQuery("SELECT p FROM Poll p WHERE p.question = :firstName");
-        q.setParameter("firstName", "Jim_1");
-        Poll user = (Poll) q.getSingleResult();
-        em.remove(user);
-        em.getTransaction().commit();
-        Poll person = (Poll) q.getSingleResult();
-        // Begin a new local transaction so that we can persist a new entity
 
         em.close();
     }

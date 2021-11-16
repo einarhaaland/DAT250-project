@@ -43,7 +43,7 @@ export default class Register extends Component {
 
         if (this.state.password === this.state.rewritePassword) {
 
-        const res = await fetch('/users', {
+        const res = await fetch('/registration', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',

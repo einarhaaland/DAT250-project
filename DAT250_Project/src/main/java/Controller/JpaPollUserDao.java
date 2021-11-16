@@ -23,6 +23,10 @@ public class JpaPollUserDao {
         return query.getResultList();
     }
 
+    public PollUser findByUsername(String username) {
+        return em.find(PollUser.class, username);
+    }
+
     public PollUser save(PollUser user) {
 
         executeInsideTransaction(em -> em.persist(user));

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class LoginController {
 
     @GetMapping("login")

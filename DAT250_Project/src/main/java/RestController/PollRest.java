@@ -13,7 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class PollRest {
 
     private static EntityManagerFactory factory;
@@ -28,7 +28,7 @@ public class PollRest {
         return pollService.getAll();
     }
 
-    @PostMapping("/user/{id}/poll")
+    @PostMapping("/user/{id}/polls")
     Poll newPoll(@RequestBody Poll poll, @PathVariable int id) {
 
         PollUser user = userService.get(id);
