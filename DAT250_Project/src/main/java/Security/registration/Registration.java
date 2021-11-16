@@ -7,7 +7,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "registration")
 public class Registration {
 
-    private RegistrationService registrationService;
+    private final RegistrationService registrationService;
+
+    public Registration(RegistrationService registrationService) {
+        this.registrationService = registrationService;
+    }
 
     @PostMapping
     public String register(@RequestBody RegistrationRequest request) {

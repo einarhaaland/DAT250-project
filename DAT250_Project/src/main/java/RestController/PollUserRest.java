@@ -2,14 +2,7 @@ package RestController;
 
 
 import Controller.JpaPollUserDao;
-import Controller.PollDao;
-import Controller.VoteDao;
 import Model.PollUser;
-import Test.JPATest;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -19,11 +12,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class PollUserRest {
 
-    private static EntityManagerFactory factory;
-
     //DAO instances
-    PollDao pollService = new PollDao();
-    VoteDao voteService = new VoteDao();
     JpaPollUserDao userService = new JpaPollUserDao();
 
     @GetMapping("/users")
@@ -36,7 +25,7 @@ public class PollUserRest {
         return userService.save(user);
     }
 
-    @GetMapping("/user/{id")
+    @GetMapping("/user/{id}")
     PollUser get(@PathVariable int id) {
         return userService.get(id);
     }

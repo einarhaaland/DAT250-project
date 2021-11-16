@@ -1,7 +1,5 @@
 package RestController;
 
-
-
 import Controller.JpaPollUserDao;
 import Controller.PollDao;
 import Controller.VoteDao;
@@ -9,14 +7,11 @@ import Model.Poll;
 import Model.PollUser;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class PollRest {
-
-    private static EntityManagerFactory factory;
 
     //DAO instances
     PollDao pollService = new PollDao();

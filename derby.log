@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Tue Nov 16 14:36:41 CET 2021:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-017d-28f6-c683-0000122e2e80 
-on database directory memory:C:\Users\Daniel\Desktop\DAT250-project\0c6e641d-30ca-4f47-b3a5-70a51f4c0a72 with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@77556fd 
+Tue Nov 16 15:05:09 CET 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-017d-2910-d97c-00000ee70858 
+on database directory memory:C:\Users\Daniel\Desktop\DAT250-project\16e79eb2-3cf7-4910-b52f-478bafab9824 with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@77556fd 
 Loaded from file:/C:/Users/Daniel/.m2/repository/org/apache/derby/derby/10.15.2.0/derby-10.15.2.0.jar
 java.vendor=Oracle Corporation
 java.runtime.version=11+28

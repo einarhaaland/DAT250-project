@@ -5,7 +5,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class ConfirmationTokenService {
 
-    private ConfirmationTokenRepository confirmationTokenRepository;
+    private final ConfirmationTokenRepository confirmationTokenRepository;
+
+    public ConfirmationTokenService(ConfirmationTokenRepository confirmationTokenRepository) {
+        this.confirmationTokenRepository = confirmationTokenRepository;
+    }
 
     public void saveConfirmationToken (ConfirmationToken confirmationToken) {
 

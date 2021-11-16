@@ -35,7 +35,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
             http.cors().and().csrf().disable().authorizeRequests()
-                    .antMatchers(HttpMethod.POST,"/registration").permitAll()
+                    .antMatchers(HttpMethod.POST,"/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -53,7 +53,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                     .clearAuthentication(true)
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID", "remember-me")
-                    .logoutSuccessUrl("/login");
+                    .logoutSuccessUrl("/login")
+                    .and().anonymous().and().httpBasic().disable();
     }
 
     @Override

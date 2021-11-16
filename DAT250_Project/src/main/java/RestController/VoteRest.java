@@ -7,14 +7,11 @@ import Model.Poll;
 import Model.Vote;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class VoteRest {
-
-    private static EntityManagerFactory factory;
 
     //DAO instances
     PollDao pollService = new PollDao();

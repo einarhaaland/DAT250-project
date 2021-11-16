@@ -2,7 +2,6 @@ package Security;
 
 import Controller.JpaPollUserDao;
 import Model.PollUser;
-import Repositories.PollUserRepository;
 import Security.token.ConfirmationToken;
 import Security.token.ConfirmationTokenService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,13 +16,11 @@ import java.util.UUID;
 @Service
 public class AppUserService implements UserDetailsService {
 
-    private final PollUserRepository pollUserRepository;
     private final JpaPollUserDao userService;
     private final PasswordEncoder encoder;
     private final ConfirmationTokenService confirmationTokenService;
 
-    public AppUserService(PollUserRepository pollUserRepository, JpaPollUserDao userService, PasswordEncoder encoder, ConfirmationTokenService confirmationTokenService) {
-        this.pollUserRepository = pollUserRepository;
+    public AppUserService(JpaPollUserDao userService, PasswordEncoder encoder, ConfirmationTokenService confirmationTokenService) {
         this.userService = userService;
         this.encoder = encoder;
         this.confirmationTokenService = confirmationTokenService;
