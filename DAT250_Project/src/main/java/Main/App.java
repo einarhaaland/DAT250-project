@@ -1,4 +1,4 @@
-package RestAPI;
+package Main;
 
 import Controller.JpaPollUserDao;
 import Controller.PollDao;
@@ -12,9 +12,6 @@ import com.google.gson.Gson;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.List;
 

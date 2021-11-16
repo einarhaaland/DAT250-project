@@ -4,8 +4,6 @@ import Controller.JpaPollUserDao;
 import Model.PollUser;
 import Security.token.ConfirmationToken;
 import Security.token.ConfirmationTokenService;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
-public class AppUserService implements UserDetailsService {
+public class AppUserService {
 
     private final JpaPollUserDao userService;
     private final PasswordEncoder encoder;
@@ -26,8 +24,7 @@ public class AppUserService implements UserDetailsService {
         this.confirmationTokenService = confirmationTokenService;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+    public PollUser loadUserByUsername2(String s) throws UsernameNotFoundException {
 
         try {
             return userService.findByUsername(s);

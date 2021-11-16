@@ -9,19 +9,16 @@ import javax.persistence.Query;
 
 import Controller.JpaPollUserDao;
 import Controller.PollDao;
-import Controller.PollUserDao;
 
 import Controller.VoteDao;
 import Model.PollUser;
 import Model.VoteE;
-import Security.AppUserRole;
 import org.junit.Before;
 import org.junit.Test;
 
 import Model.Poll;
 import Model.Vote;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class JPATest {
@@ -63,7 +60,7 @@ public class JPATest {
             assertTrue(users.size() == 0);
 
 
-            PollUser user = new PollUser("Family for the Knopfs", "passord1", AppUserRole.POLLUSER);
+            PollUser user = new PollUser("Family for the Knopfs", "passord1");
 
             Poll poll = new Poll();
             poll.setQuestion("Knopf_");

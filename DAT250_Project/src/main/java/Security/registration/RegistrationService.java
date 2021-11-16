@@ -1,7 +1,6 @@
 package Security.registration;
 
 import Model.PollUser;
-import Security.AppUserRole;
 import Security.AppUserService;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +17,7 @@ public class RegistrationService {
         return appUserService.signUpUser(
                 new PollUser(
                         request.getUsername(),
-                        request.getPassword(),
-                        AppUserRole.POLLUSER
+                        request.getPassword()
                 )
         );
     }

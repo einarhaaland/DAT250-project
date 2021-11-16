@@ -53,11 +53,10 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                     .clearAuthentication(true)
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID", "remember-me")
-                    .logoutSuccessUrl("/login")
-                    .and().anonymous().and().httpBasic().disable();
+                    .logoutSuccessUrl("/login").and().httpBasic().disable();
     }
 
-    @Override
+    /*@Override
     @Autowired
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
@@ -70,5 +69,5 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         provider.setPasswordEncoder(passwordEncoder);
         provider.setUserDetailsService(appUserService);
         return provider;
-    }
+    }*/
 }
