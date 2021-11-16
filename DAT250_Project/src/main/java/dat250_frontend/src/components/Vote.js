@@ -48,7 +48,11 @@ export default function Vote() {
             credentials: 'include',
             body: JSON.stringify({ vote: vote })
         })
-
+        if(vote === "Yes") {
+            setYes(Integer.parseInt(voteYes) + 1)
+        } else {
+            setNo(Integer.parseInt(voteNo) + 1)
+        }
     }
 
     return (
