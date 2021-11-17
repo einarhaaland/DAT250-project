@@ -1,6 +1,9 @@
 package MessagingSystems;
 
 import Model.Result;
+import Model.Vote;
+import com.google.gson.Gson;
+import com.mongodb.Mongo;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
@@ -18,7 +21,7 @@ import java.util.concurrent.Callable;
  */
 // TODO: rename file to something better
 // Sender
-public class Messaging implements Runnable, MqttCallback {
+public class Messaging implements MqttCallback {
 
     //TODO: Not certain of these variables just yet
     public static final String TOPIC = "#";
@@ -30,42 +33,8 @@ public class Messaging implements Runnable, MqttCallback {
     private static String password = "password";
     MemoryPersistence persistence = new MemoryPersistence();
 
-    public void tester() throws MqttException {
 
-        String publisherId = UUID.randomUUID().toString();
-        MqttClient publisher = new MqttClient(connectionURI,publisherId, persistence);
-
-        String subscriberId = UUID.randomUUID().toString();
-        MqttClient subscriber = new MqttClient(connectionURI,subscriberId, persistence);
-
-        MqttConnectOptions options = new MqttConnectOptions();
-        options.setAutomaticReconnect(true);
-        options.setCleanSession(true);
-        options.setConnectionTimeout(10);
-
-
-        subscriber.connect(options);
-        System.out.println("Subscriber connected");
-
-        publisher.connect(options);
-        System.out.println("Subscriber connected");
-
-        MqttMessage message = new MqttMessage("Ed Sheeran".getBytes());
-
-
-        publisher.publish("/test/topic", message);
-        subscriber.subscribe("/test/topic", (topic, mess) -> {
-            byte[] payload = mess.getPayload();
-            System.out.println(payload.toString());
-        });
-
-
-
-    }
-
-
-
-    public void testPaho() {
+    public void sendResult(Result result) {
         String broker = "tcp://localhost:1883";
         String topicName = "test/topic";
 
@@ -81,19 +50,18 @@ public class Messaging implements Runnable, MqttCallback {
             connOpts.setKeepAliveInterval(1000);
 
 
-            MqttMessage message = new MqttMessage("Ed Sheeran".getBytes());
+            MqttMessage message = new MqttMessage(result.toJson().getBytes());
 
             message.setQos(qos);     //sets qos level 1
             message.setRetained(true); //sets retained message
 
             MqttTopic topic2 = mqttClient.getTopic(topicName);
 
-            System.out.println("Starting connection...");
+
             mqttClient.connect(connOpts); //connects the broker with connect options
-            System.out.println("Connected[x]");
 
             topic2.publish(message);    // publishes the message to the topic(test/topic)
-            System.out.println("publishing testmessage");
+
 
         } catch (MqttException e) {
             e.printStackTrace();
@@ -101,10 +69,10 @@ public class Messaging implements Runnable, MqttCallback {
     }
     public void run(){
 
-//We're using eclipse paho library  so we've to go with MqttCallback
+
         MqttClient client = null;
         try {
-            client = new MqttClient("tcp://localhost:1883", "clientid");
+            client = new MqttClient("tcp://localhost:1883", "clientid", persistence);
             client.setCallback(this);
             MqttConnectOptions mqOptions = new MqttConnectOptions();
             mqOptions.setCleanSession(true);
@@ -117,31 +85,6 @@ public class Messaging implements Runnable, MqttCallback {
 
     }
 
-    public static void MQTTPublishMessage(Result result) throws MqttException {
-
-        String pId = UUID.randomUUID().toString();
-        IMqttClient publisher = new MqttClient(connectionURI, pId);
-        MqttConnectOptions cOptions = new MqttConnectOptions();
-
-        cOptions.setAutomaticReconnect(true);
-        cOptions.setCleanSession(true);
-        cOptions.setConnectionTimeout(10);
-
-        //Start Connecting to Broker
-        publisher.connect(cOptions);
-
-
-        // Turning the result into an MqttMessage
-        MqttMessage message = new MqttMessage(result.toJson().getBytes());
-        message.setQos(qos);
-
-
-        publisher.publish(TOPIC, message);
-
-        publisher.disconnect();
-
-    }
-
     @Override
     public void connectionLost(Throwable throwable) {
 
@@ -149,7 +92,18 @@ public class Messaging implements Runnable, MqttCallback {
 
     @Override
     public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
-        System.out.println(mqttMessage);
+
+        System.out.println("message arrived");
+
+        String message = new String(mqttMessage.getPayload());
+
+        Result result = new Gson().fromJson(message, Result.class);
+
+
+
+        MongoService mongoservice = new MongoService();
+        mongoservice.mongoService(result);
+
     }
 
     @Override

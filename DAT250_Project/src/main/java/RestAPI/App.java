@@ -5,6 +5,7 @@ import Controller.PollDao;
 import Controller.VoteDao;
 import MessagingSystems.Messaging;
 //import MessagingSystems.MongoService;
+import MessagingSystems.MongoService;
 import Model.*;
 import Test.JPATest;
 import com.google.gson.Gson;
@@ -37,15 +38,21 @@ public class App {
         }
 
         Result result = new Result(1, 23, 4);
-        //messaging.MQTTPublishMessage(result);
-        //MongoService mqttSub = new MongoService();
-        //mqttSub.run();
+
         Messaging m = new Messaging();
+        Messaging m2 = new Messaging();
+        //Thread t = new Thread(new Messaging());
 
+        MongoService mongo =  new MongoService();
 
-        m.testPaho();
+        mongo.mongoService(result);
+
+        /*
         m.run();
+        m.sendResult(result);
+        /*
 
+         */
         //Entity Manager
         factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         EntityManager em = factory.createEntityManager();
@@ -93,7 +100,7 @@ public class App {
             response.type("application/json");
 
             Result r = new Gson().fromJson(request.body(), Result.class);
-            messaging.MQTTPublishMessage(r);
+            messaging.sendResult(r);
 
 
             return result.toJson();
