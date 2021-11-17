@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -33,11 +34,12 @@ public class AppUserService {
         }
     }
 
-    public String signUpUser(PollUser user) {
-        PollUser userExists = userService.findByUsername(user.getUsername());
+    public PollUser signUpUser(PollUser user) {
 
-        if (userExists.getId() > 0) {
-            throw new IllegalStateException("username already exists");
+        List<PollUser> userExists = userService.getAll();
+
+        for (PollUser p : userExists) {
+            if (user.equals(p)) throw new IllegalStateException("Username already exists");
         }
 
         String password = encoder.encode(user.getPassword());
@@ -56,6 +58,6 @@ public class AppUserService {
 
         confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-        return token;
+        return user;
     }
 }

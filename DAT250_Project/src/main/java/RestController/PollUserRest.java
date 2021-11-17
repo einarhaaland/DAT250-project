@@ -28,8 +28,8 @@ public class PollUserRest {
     private RegistrationService registrationService;
 
     @PostMapping("/registration")
-    public String register(@RequestBody RegistrationRequest request) {
-        return registrationService.register(request);
+    public PollUser register(@RequestBody PollUser user) {
+        return registrationService.register(user);
     }
 
     //PollUser REST

@@ -1,7 +1,9 @@
 package Controller;
 
 import Model.PollUser;
+import Security.PasswordConfig;
 import Test.JPATest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.function.Consumer;
 
 public class JpaPollUserDao {
 
+    private PasswordEncoder passwordEncoder;
     private EntityManagerFactory factory = Persistence.createEntityManagerFactory(JPATest.PERSISTENCE_UNIT_NAME);
     private EntityManager em = factory.createEntityManager();
 
@@ -26,6 +29,7 @@ public class JpaPollUserDao {
     }
 
     public PollUser save(PollUser user) {
+
 
         executeInsideTransaction(em -> em.persist(user));
         return user;
