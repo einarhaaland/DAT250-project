@@ -4,6 +4,7 @@ import Controller.JpaPollUserDao;
 import Controller.PollDao;
 import Controller.VoteDao;
 import MessagingSystems.Messaging;
+//import MessagingSystems.MongoService;
 import Model.*;
 import Test.JPATest;
 import com.google.gson.Gson;
@@ -19,6 +20,7 @@ import java.net.UnknownHostException;
 import java.util.List;
 
 import static Globals.Globals.PERSISTENCE_UNIT_NAME;
+
 import static spark.Spark.*;
 
 public class App {
@@ -35,11 +37,14 @@ public class App {
         }
 
         Result result = new Result(1, 23, 4);
-        try {
-            messaging.MQTTPublishMessage(result);
-        } catch (MqttException e) {
-            e.printStackTrace();
-        }
+        //messaging.MQTTPublishMessage(result);
+        //MongoService mqttSub = new MongoService();
+        //mqttSub.run();
+        Messaging m = new Messaging();
+
+
+        m.testPaho();
+        m.run();
 
         //Entity Manager
         factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
