@@ -8,7 +8,7 @@ export default function Vote() {
     const [question, setQuestion] = useState([])
     const [voteYes, setYes] = useState([])
     const [voteNo, setNo] = useState([])
-
+    const [voteFlag, setVoteFlag] = useState([])
 
     const polls = async () => {
         await fetch(`/polls/${id}`)
@@ -18,11 +18,12 @@ export default function Vote() {
             })
     }
 
+
     const votes = async () => {
         let yesVotes = 0;
         let noVotes = 0;
 
-        await fetch(`/polls/${pollId}/votes`)
+        await fetch(`/polls/${id}/votes`)
             .then((response) => response.json())
             .then((data) => {
                 for (let i = 0; i < data.length; i++) {
@@ -48,11 +49,15 @@ export default function Vote() {
             credentials: 'include',
             body: JSON.stringify({ vote: vote })
         })
-        if(vote === "Yes") {
-            setYes(Integer.parseInt(voteYes) + 1)
-        } else {
-            setNo(Integer.parseInt(voteNo) + 1)
-        }
+        if(voteFlag === null) {
+            if(vote === "Yes") {
+                setYes(parseInt(voteYes) + 1)
+
+            } else {
+                setNo(parseInt(voteYes) + 1)
+            }
+        } setVoteFlag(false)
+
     }
 
     return (
