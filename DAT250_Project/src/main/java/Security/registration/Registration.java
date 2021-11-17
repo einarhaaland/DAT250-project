@@ -1,9 +1,8 @@
-package Security.registration;
+/*package Security.registration;
 
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(path = "registration")
 public class Registration {
 
@@ -17,4 +16,4 @@ public class Registration {
     public String register(@RequestBody RegistrationRequest request) {
         return registrationService.register(request);
     }
-}
+}*/
