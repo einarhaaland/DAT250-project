@@ -1,16 +1,9 @@
 package MessagingSystems;
 
 import Model.Result;
-import Model.Vote;
 import com.google.gson.Gson;
-import com.mongodb.Mongo;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
-
-import java.nio.charset.StandardCharsets;
-import java.sql.SQLOutput;
-import java.util.UUID;
-import java.util.concurrent.Callable;
 
 
 /**
@@ -42,42 +35,41 @@ public class Messaging implements MqttCallback {
 
         try {
             IMqttClient mqttClient = new MqttClient(broker, String.valueOf(System.nanoTime()), persistence);
-            //Mqtt ConnectOptions is used to set the additional features to mqtt message
+
 
             MqttConnectOptions connOpts = new MqttConnectOptions();
 
-            connOpts.setCleanSession(true); //no persistent session
+            connOpts.setCleanSession(true);
             connOpts.setKeepAliveInterval(1000);
 
 
             MqttMessage message = new MqttMessage(result.toJson().getBytes());
 
-            message.setQos(qos);     //sets qos level 1
-            message.setRetained(true); //sets retained message
+            message.setQos(qos);
+            message.setRetained(true);
 
             MqttTopic topic2 = mqttClient.getTopic(topicName);
 
 
-            mqttClient.connect(connOpts); //connects the broker with connect options
+            mqttClient.connect(connOpts);
 
-            topic2.publish(message);    // publishes the message to the topic(test/topic)
+            topic2.publish(message);
 
 
         } catch (MqttException e) {
             e.printStackTrace();
         }
     }
-    public void run(){
 
+    public void run() {
 
-        MqttClient client = null;
         try {
-            client = new MqttClient("tcp://localhost:1883", "clientid", persistence);
+            MqttClient client = new MqttClient("tcp://localhost:1883", "clientid", persistence);
             client.setCallback(this);
             MqttConnectOptions mqOptions = new MqttConnectOptions();
             mqOptions.setCleanSession(true);
-            client.connect(mqOptions);      //connecting to broker
-            client.subscribe("test/topic"); //subscribing to the topic name  test/topic
+            client.connect(mqOptions);
+            client.subscribe("test/topic");
 
         } catch (MqttException e) {
             e.printStackTrace();
@@ -98,7 +90,6 @@ public class Messaging implements MqttCallback {
         String message = new String(mqttMessage.getPayload());
 
         Result result = new Gson().fromJson(message, Result.class);
-
 
 
         MongoService mongoservice = new MongoService();
