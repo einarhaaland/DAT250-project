@@ -9,19 +9,15 @@ public class Result {
      * Hente id fra poll? så slipper vi generere nye
      */
 
-    //private int id;
     private String question;
     private int yes;
     private int no;
 
-    public Result(String question, int yes, int no){
-  //      this.id = id;
+    public Result(String question, int yes, int no) {
         this.question = question;
         this.yes = yes;
         this.no = no;
     }
-
-
     public int getYes() {
         return yes;
     }
@@ -34,6 +30,7 @@ public class Result {
         return no;
     }
 
+
     public String getQuestion() {
         return question;
     }
@@ -41,7 +38,6 @@ public class Result {
     public void setQuestion(String question) {
         this.question = question;
     }
-
     public void setNo(int no) {
         this.no = no;
     }
