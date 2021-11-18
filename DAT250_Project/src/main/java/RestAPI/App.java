@@ -37,22 +37,9 @@ public class App {
             port(8080);
         }
 
-        Result result = new Result(1, 23, 4);
 
-        Messaging m = new Messaging();
-        Messaging m2 = new Messaging();
-        //Thread t = new Thread(new Messaging());
 
-        MongoService mongo =  new MongoService();
 
-        mongo.mongoService(result);
-
-        /*
-        m.run();
-        m.sendResult(result);
-        /*
-
-         */
         //Entity Manager
         factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         EntityManager em = factory.createEntityManager();
@@ -110,7 +97,7 @@ public class App {
             messaging.sendResult(r);
 
 
-            return result.toJson();
+            return r.toJson();
         });
 
 
