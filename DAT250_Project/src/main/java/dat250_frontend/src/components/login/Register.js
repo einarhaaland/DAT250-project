@@ -63,6 +63,7 @@ export default class Register extends Component {
             this.showWarning()
         }
     }
+    
 
 
     render () {

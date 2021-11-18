@@ -5,7 +5,7 @@ export default function EditUsername(props) {
     
     const [username, setUsername] = useState("");
     const [repeat, setRepeat] = useState("");
-    const user = props.user;
+    const user = props.currentUser;
     const handleSubmit = () => {
 
         if (username === repeat) {

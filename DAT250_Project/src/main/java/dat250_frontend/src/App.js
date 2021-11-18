@@ -20,6 +20,9 @@ export default class App extends Component {
       errorMessage: '',
       loaded: false
     }
+  
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   handleLogin(user) {
@@ -28,6 +31,7 @@ export default class App extends Component {
       currentUser: user
     });
 
+    console.log(this.currentUser)
   }
 
   handleLogout(){
@@ -35,17 +39,18 @@ export default class App extends Component {
       loggedInStatus: false,
       currentUser: {}
     });
+    console.log(this.currentUser)
   }
 
   render() {
     return (
       <Router>
-        <Layout>
+        <Layout currentUser={this.state.currentUser} handleLogout={this.handleLogout}>
             <Route 
               exact
               path='/login'
               render = {props => (
-              <Login {...props} handleLogin={this.handleLogin} handleLogout={this.handleLogout}/>
+              <Login {...props} user={this.state.currentUser} handleLogin={this.handleLogin}/>
               )}
             />
 
@@ -53,15 +58,15 @@ export default class App extends Component {
               exact 
               path={'/'}
               render={props => (
-                <Polls {...props} />
+                <Polls {...props} user={this.state.currentUser} />
               )}
             />
 
           <Route
             exact
-            path={'/profile/:id'}
+            path={'/profile'}
             render={() => (
-              <User user={this.state.currentUser} />
+              <User {...this.props} user={this.state.currentUser} />
             )}
           />
 

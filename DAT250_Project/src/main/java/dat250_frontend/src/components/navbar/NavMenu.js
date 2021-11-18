@@ -24,9 +24,9 @@ export default class NavMenu extends Component {
       }
 
     isLoggedIn(){
-        if(Object.keys(this.props.currentUser).length > 0) {
+        if(this.props.currentUser !== {}) {
         return(
-            <NavLink tag={Link} onClick={this.props.handleLoutout} className="text-light" to="/login">Logout</NavLink>
+            <NavLink tag={Link} onClick={this.props.handleLogout} className="text-light" to="/login">Logout</NavLink>
         );
         }
         else {
@@ -38,7 +38,7 @@ export default class NavMenu extends Component {
 
 
     render() {
-        //let contents = this.isLoggedIn();
+        let contents = this.isLoggedIn();
 
         return (
             <header>
@@ -54,7 +54,7 @@ export default class NavMenu extends Component {
                                     <NavLink tag={Link} className="text-light" to="/profile">Profile</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={Link} className="text-light" to="/login">Login</NavLink>
+                                    {contents}
                                 </NavItem>
                             </ul>
                         </Collapse>

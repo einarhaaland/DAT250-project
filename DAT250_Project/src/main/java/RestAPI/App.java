@@ -40,6 +40,13 @@ public class App {
         VoteDao voteService = new VoteDao();
         JpaPollUserDao userService = new JpaPollUserDao();
 
+        //Login
+        post("/login", (request, response) -> {
+            response.type("application/json");
+            PollUser user = new Gson().fromJson(request.body(), PollUser.class);
+            return userService.login(user).toJson();
+        });
+
         //CREATE
         post("/user/:id/polls", (request, response) -> {
             response.type("application/json");
