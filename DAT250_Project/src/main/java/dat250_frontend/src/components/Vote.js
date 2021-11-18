@@ -6,6 +6,10 @@ export default function Vote() {
     const { id } = useParams();
 
     const [question, setQuestion] = useState([])
+    const [voteYes, setYes] = useState([])
+    const [voteNo, setNo] = useState([])
+    const [voteFlag, setVoteFlag] = useState([])
+
     const polls = async () => {
         await fetch(`/polls/${id}`)
             .then((response) => response.json())
@@ -14,8 +18,26 @@ export default function Vote() {
             })
     }
 
+
+    const votes = async () => {
+        let yesVotes = 0;
+        let noVotes = 0;
+
+        await fetch(`/polls/${id}/votes`)
+            .then((response) => response.json())
+            .then((data) => {
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i].vote === "YES") yesVotes++;
+                    else noVotes++;
+                }
+                setYes(yesVotes);
+                setNo(noVotes);
+            })
+    }
+
     useEffect(() => {
         polls();
+        votes();
     })
 
     const handleSubmit = (vote) => (event) => {
@@ -27,22 +49,49 @@ export default function Vote() {
             credentials: 'include',
             body: JSON.stringify({ vote: vote })
         })
+        if(voteFlag === null) {
+            if(vote === "Yes") {
+                setYes(parseInt(voteYes) + 1)
+
+            } else {
+                setNo(parseInt(voteYes) + 1)
+            }
+        } setVoteFlag(false)
 
     }
 
     return (
         <div>
-            <h1>{question}</h1>
-            <button
-                onClick={handleSubmit("YES")}
-                type="submit">
-                YES
-            </button>
-            <button
-                onClick={handleSubmit("NO")}
-                type="submit">
-                NO
-            </button>
+            <div>
+                <h1>{question}</h1>
+                <button
+                    onClick={handleSubmit("YES")}
+                    type="submit">
+                    YES
+                </button>
+                <button
+                    onClick={handleSubmit("NO")}
+                    type="submit">
+                    NO
+                </button>
+            </div>
+            <div>
+                <br/><br/><br/>
+                <h3>Results</h3>
+                <table className='table table-sm'>
+                    <thead className="thead-dark">
+                    <tr>
+                        <th>Total votes:</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>YES: {voteYes}</td>
+                        <td>NO: {voteNo}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }
