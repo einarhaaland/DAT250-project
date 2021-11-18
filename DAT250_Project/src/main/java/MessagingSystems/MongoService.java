@@ -2,15 +2,19 @@
 package MessagingSystems;
 
 import Model.Result;
-import com.mongodb.*;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
+
+import com.google.gson.Gson;
+import com.mongodb.BasicDBObject;
+import com.mongodb.MongoCredential;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 
 
 import java.net.UnknownHostException;
+import java.util.Iterator;
 import java.util.List;
 
 public class MongoService {
@@ -19,25 +23,47 @@ public class MongoService {
     public static void mongoService(Result result) {
 
 
-        MongoClient client = MongoClients.create();
+        try {
+            MongoClient client = new MongoClient("localhost", 27017);
 
-        System.out.println("MongoClient init");
+            MongoCredential cred = MongoCredential.createCredential("user", "results", "password".toCharArray());
 
-        MongoDatabase db = client.getDatabase("results");
+            MongoDatabase db = client.getDatabase("results");
 
-        System.out.println("db init");
+            if (db.getCollection("resultColl").equals(null)){
+                System.out.println("Did not find the collection... \n Creating new collection named \"resultColl\"");
+                db.createCollection("resultColl");
+            }else{
+                System.out.println("Found collection: \"resultColl\"");
+            }
 
-        MongoCollection<Document> collection = db.getCollection("resultColl");
+            MongoCollection<Document> collection = db.getCollection("resultColl");
 
-        System.out.println("mongodb and collection init'ed");
+            Document entry = new Document("id", result.getId())
+                    .append("yes", result.getYes())
+                    .append("no", result.getNo());
 
-        Document entry = new Document("id", result.getId())
-                .append("yes", result.getYes())
-                .append("no", result.getNo());
+            collection.insertOne(entry);
 
-        collection.insertOne(entry);
 
-        System.out.println(collection.find());
+            FindIterable<Document> iterDoc = collection.find();
+
+            Iterator iterator = iterDoc.iterator();
+
+
+
+            while(iterator.hasNext()){
+                Document doc = (Document) iterator.next();
+                Result r = new Gson().fromJson(doc.toJson(), Result.class);
+                System.out.println(r.getId() + "\n" + r.getYes() + "\n" + r.getNo() + "\n");
+
+            }
+
+
+        } catch (Exception e) {
+            System.out.println("Connection failed");
+            e.printStackTrace();
+        }
 
 
     }
