@@ -2,20 +2,15 @@
 package MessagingSystems;
 
 import Model.Result;
-
 import com.google.gson.Gson;
-import com.mongodb.BasicDBObject;
+import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
-
-import java.net.UnknownHostException;
 import java.util.Iterator;
-import java.util.List;
 
 public class MongoService {
 

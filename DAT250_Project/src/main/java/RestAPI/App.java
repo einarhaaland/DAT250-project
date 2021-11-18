@@ -89,7 +89,6 @@ public class App {
             Result r = new Gson().fromJson(request.body(), Result.class);
             messaging.sendResult(r);
 
-
             return r.toJson();
         });
 
