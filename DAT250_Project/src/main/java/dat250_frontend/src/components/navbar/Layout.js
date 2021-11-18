@@ -7,12 +7,6 @@ export default class Layout extends Component {
 
   constructor(props){
     super(props);
-    this.state = ({currentUser: {}});
-  }
-
-  componentDidMount(){
-    this.setState({currentUser: this.props.currentUser});
-    
   }
 
   render () {

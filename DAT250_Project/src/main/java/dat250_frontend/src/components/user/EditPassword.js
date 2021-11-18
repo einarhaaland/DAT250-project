@@ -4,7 +4,7 @@ import { useState } from 'react';
 export default function EditPassword(props) {
     const [password, setPassword] = useState("");
     const [repeat, setRepeat] = useState("");
-    const user = props.currentUser;
+    const user = props.user;
     const handleSubmit = () => {
 
         if (password === repeat) {
