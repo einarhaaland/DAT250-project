@@ -95,7 +95,6 @@ public class App {
             t.run();
 
             messaging.sendResult(r);
-            System.out.println("result sent to messaging");
 
             return r.toJson();
         });
