@@ -77,17 +77,14 @@ public class App {
             return user.toJson();
         });
 
-        //TODO: Upload results to mongoDB using MQTT
-        /**
-         *
-         * Q: Kan vi lage knapp i frontend som sender json representasjon av poll resultat?
-         *
-         */
+
         post("/results/:id", (request, response) -> {
             response.type("application/json");
 
             Result r = new Gson().fromJson(request.body(), Result.class);
             messaging.sendResult(r);
+
+            //TODO: SKal vi legge til sletting her, eller har ein post og eit delete kall fra forntend
 
             return r.toJson();
         });
@@ -167,37 +164,6 @@ public class App {
                 return new Gson().toJson(" not found or error in edit");
             }
         });
-/*
-        try {
-            // Create new instance of mongoclient
-            MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
-
-            // get and/or create db and collection
-            DB database = mongoClient.getDB("PollResults");
-            DBCollection collection = database.getCollection("Results");
-
-            post("/polls/:id/votes", (request, response) -> {
-                response.type("application/json");
-                Vote vote = new Gson().fromJson(request.body(), Vote.class);
-
-
-                if (vote.getVote() == VoteE.YES) {
-                    collection.update();
-                } else if (vote.getVote() == VoteE.NO) {
-                    collection.update();
-                }
-                //DBObject object = new BasicDBObject("_id", voteId)
-
-
-                return collection.insert(object);
-
-            });
-
-
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-*/
 
         em.close();
 
