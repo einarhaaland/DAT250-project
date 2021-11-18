@@ -18,7 +18,7 @@ export default class Layout extends Component {
   render () {
     return (
       <div>
-        <NavMenu />
+        <NavMenu currentUser={this.props.currentUser} handleLogout={this.props.handleLogout}/>
         <Container>
           {this.props.children}
         </Container>

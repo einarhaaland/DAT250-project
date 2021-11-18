@@ -38,6 +38,29 @@ export default class Login extends Component {
         e.preventDefault()
         const {username, password} = this.state
 
+        await fetch('/login', {
+            method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({
+                     username, 
+                     password,
+                    })
+            }).then((response) => {
+                if(response.status >= 200 && response.status <= 299){
+                    this.props.handleLogin(response.json);
+                    return response.json();
+                }
+                else{
+                    this.showWarning();
+                    throw Error("Login was not successful");
+                }
+            }).then((jsonResponse) => {
+                console.log("from login:" + jsonResponse);
+                this.props.history.push('/')
+            }).catch((error) => {
+                console.log("Something went wrong in login: " + error);
+            });
 
     }
 

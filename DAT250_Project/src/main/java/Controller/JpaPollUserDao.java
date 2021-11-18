@@ -14,6 +14,19 @@ public class JpaPollUserDao {
     private EntityManagerFactory factory = Persistence.createEntityManagerFactory(JPATest.PERSISTENCE_UNIT_NAME);
     private EntityManager em = factory.createEntityManager();
 
+    //Login
+    public PollUser login(PollUser user) {
+
+        List<PollUser> list = getAll();
+
+        for (PollUser p : list) {
+            if (p.getUsername().equals(user.getUsername()) && p.getPassword().equals(user.getPassword())) {
+                return get(p.getId());
+            }
+        }
+        throw new IllegalStateException("Username or password is incorrect");
+    }
+
     public PollUser get(int id) {
         return em.find(PollUser.class, id);
     }
@@ -24,6 +37,15 @@ public class JpaPollUserDao {
     }
 
     public void save(PollUser user) {
+
+        List<PollUser> list = getAll();
+
+        for (PollUser p : list) {
+            if (p.getUsername().equals(user.getUsername())) {
+                throw new IllegalStateException("User already exists");
+            }
+        }
+
         executeInsideTransaction(em -> em.persist(user));
     }
 

@@ -4,18 +4,19 @@ import { useState } from 'react';
 export default function EditPassword(props) {
     const [password, setPassword] = useState("");
     const [repeat, setRepeat] = useState("");
-    const user = props.user;
+    const user = props.currentUser;
     const handleSubmit = () => {
 
         if (password === repeat) {
 
+            console.log(user.password)
             //TODO: make sure this works
             fetch("/users/" + user.id, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({password: repeat})
             })
-
+            console.log(user.password)
         } else {
             console.log("Passwords are not equal");
         }
