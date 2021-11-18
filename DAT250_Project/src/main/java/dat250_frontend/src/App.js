@@ -50,7 +50,7 @@ export default class App extends Component {
               exact
               path='/login'
               render = {props => (
-              <Login {...props} user={this.state.currentUser} handleLogin={this.handleLogin}/>
+              <Login {...props} handleLogin={this.handleLogin}/>
               )}
             />
 

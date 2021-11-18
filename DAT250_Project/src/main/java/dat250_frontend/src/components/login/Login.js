@@ -48,7 +48,6 @@ export default class Login extends Component {
                     })
             }).then((response) => {
                 if(response.status >= 200 && response.status <= 299){
-                    this.props.handleLogin(response.json);
                     return response.json();
                 }
                 else{
@@ -57,6 +56,7 @@ export default class Login extends Component {
                 }
             }).then((jsonResponse) => {
                 console.log("from login:" + jsonResponse);
+                this.props.handleLogin(jsonResponse);
                 this.props.history.push('/')
             }).catch((error) => {
                 console.log("Something went wrong in login: " + error);
@@ -64,25 +64,13 @@ export default class Login extends Component {
 
     }
 
-    async handleRedirect() {
-        const{response} = this.state;
-        console.log(response);
-         if(response.status === 200) {
-             //this.props.handleLogin()
-             this.props.history.push('/');
-         }
-         else{
-             this.props.history.push('/register')
-         }
-     }
-
     render () {
 
         const{ username, password} = this.state;
         return (
             <div>
                 <Alert color="warning" toggle={this.onDismissWarning} hidden={this.state.onDismissWarning}>
-                 Feil brukernavn eller passord.
+                 Incorrect username or password.
                 </Alert>
                 <form onSubmit={this.handleSubmit}>
                     <label htmlFor="username">

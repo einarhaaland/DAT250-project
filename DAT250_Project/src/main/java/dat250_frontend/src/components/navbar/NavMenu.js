@@ -24,7 +24,8 @@ export default class NavMenu extends Component {
       }
 
     isLoggedIn(){
-        if(this.props.currentUser !== {}) {
+        console.log(this.props.currentUser)
+        if (Object.keys(this.props.currentUser).length > 0) {
         return(
             <NavLink tag={Link} onClick={this.props.handleLogout} className="text-light" to="/login">Logout</NavLink>
         );
