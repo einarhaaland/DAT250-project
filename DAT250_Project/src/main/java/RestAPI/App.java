@@ -3,23 +3,31 @@ package RestAPI;
 import Controller.JpaPollUserDao;
 import Controller.PollDao;
 import Controller.VoteDao;
-import Model.Poll;
-import Model.PollUser;
-import Model.Vote;
+import MessagingSystems.Messaging;
+//import MessagingSystems.MongoService;
+import MessagingSystems.MongoService;
+import Model.*;
 import Test.JPATest;
 import com.google.gson.Gson;
+import com.mongodb.*;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.internal.wire.MqttPublish;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import java.net.UnknownHostException;
 import java.util.List;
+
+import static Globals.Globals.PERSISTENCE_UNIT_NAME;
 
 import static spark.Spark.*;
 
 public class App {
 
     private static EntityManagerFactory factory;
+    private static Messaging messaging;
 
     public static void main(String[] args) {
 
@@ -29,8 +37,12 @@ public class App {
             port(8080);
         }
 
-        //Entity Manager TODO: lagre PUN (haha) ein anna plass enn JPATest
-        factory = Persistence.createEntityManagerFactory(JPATest.PERSISTENCE_UNIT_NAME);
+
+        //Messaging service
+        messaging = new Messaging();
+
+        //Entity Manager
+        factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         EntityManager em = factory.createEntityManager();
 
         em.getTransaction().begin();
@@ -74,6 +86,20 @@ public class App {
         });
 
 
+        post("/results/:id", (request, response) -> {
+            response.type("application/json");
+
+            Result r = new Gson().fromJson(request.body(), Result.class);
+
+            Thread t = new Thread(new Messaging());
+            t.run();
+
+            messaging.sendResult(r);
+
+            return r.toJson();
+        });
+
+
         //READ
         //polls
         get("/polls", (request, response) -> {
@@ -110,11 +136,11 @@ public class App {
 
             //TODO: Erstatte med hashmap
             for (PollUser user : list) {
-               for (Poll p : user.polls) {
-                   if (p.getId() == Integer.parseInt(request.params(":id"))) {
-                       pollService.removePoll(user, p);
-                   }
-               }
+                for (Poll p : user.polls) {
+                    if (p.getId() == Integer.parseInt(request.params(":id"))) {
+                        pollService.removePoll(user, p);
+                    }
+                }
             }
 
             pollService.delete(poll);
@@ -148,8 +174,6 @@ public class App {
                 return new Gson().toJson(" not found or error in edit");
             }
         });
-
-
 
         em.close();
 
