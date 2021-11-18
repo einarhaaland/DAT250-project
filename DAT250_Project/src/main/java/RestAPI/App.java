@@ -38,7 +38,8 @@ public class App {
         }
 
 
-
+        //Messaging service
+        messaging = new Messaging();
 
         //Entity Manager
         factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
@@ -89,9 +90,12 @@ public class App {
             response.type("application/json");
 
             Result r = new Gson().fromJson(request.body(), Result.class);
-            messaging.sendResult(r);
 
-            //TODO: SKal vi legge til sletting her, eller har ein post og eit delete kall fra forntend
+            Thread t = new Thread(new Messaging());
+            t.run();
+
+            messaging.sendResult(r);
+            System.out.println("result sent to messaging");
 
             return r.toJson();
         });

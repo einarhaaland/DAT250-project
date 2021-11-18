@@ -1,8 +1,11 @@
 
 package MessagingSystems;
 
+import Controller.PollDao;
+import Model.Poll;
 import Model.Result;
 import com.google.gson.Gson;
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.client.FindIterable;
@@ -16,6 +19,7 @@ public class MongoService {
 
 
     public static void mongoService(Result result) {
+    PollDao pollService = new PollDao();
 
 
         try {
@@ -28,13 +32,11 @@ public class MongoService {
             if (db.getCollection("resultColl").equals(null)){
                 System.out.println("Did not find the collection... \n Creating new collection named \"resultColl\"");
                 db.createCollection("resultColl");
-            }else{
-                System.out.println("Found collection: \"resultColl\"");
             }
 
             MongoCollection<Document> collection = db.getCollection("resultColl");
 
-            Document entry = new Document("id", result.getId())
+            Document entry = new Document("question", result.getQuestion())
                     .append("yes", result.getYes())
                     .append("no", result.getNo());
 
@@ -45,13 +47,16 @@ public class MongoService {
 
             Iterator iterator = iterDoc.iterator();
 
-
+            collection.deleteMany(new BasicDBObject());
 
             while(iterator.hasNext()){
                 Document doc = (Document) iterator.next();
-                Result r = new Gson().fromJson(doc.toJson(), Result.class);
-                System.out.println(r.getId() + "\n" + r.getYes() + "\n" + r.getNo() + "\n");
 
+                Result r = new Gson().fromJson(doc.toJson(), Result.class);
+
+                System.out.println("Question: " + r.getQuestion() +
+                        "\nYes: " + r.getYes() +
+                        "\nNo: " + r.getNo() + "\n");
             }
 
 

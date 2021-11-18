@@ -14,7 +14,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
  */
 // TODO: rename file to something better
 // Sender
-public class Messaging implements MqttCallback {
+public class Messaging implements Runnable, MqttCallback {
 
     //TODO: Not certain of these variables just yet
     public static final String TOPIC = "#";
@@ -35,7 +35,6 @@ public class Messaging implements MqttCallback {
 
         try {
             IMqttClient mqttClient = new MqttClient(broker, String.valueOf(System.nanoTime()), persistence);
-
 
             MqttConnectOptions connOpts = new MqttConnectOptions();
 
@@ -61,9 +60,11 @@ public class Messaging implements MqttCallback {
         }
     }
 
+    @Override
     public void run() {
 
         try {
+
             MqttClient client = new MqttClient("tcp://localhost:1883", "clientid", persistence);
             client.setCallback(this);
             MqttConnectOptions mqOptions = new MqttConnectOptions();
@@ -85,12 +86,9 @@ public class Messaging implements MqttCallback {
     @Override
     public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
 
-        System.out.println("message arrived");
-
         String message = new String(mqttMessage.getPayload());
 
         Result result = new Gson().fromJson(message, Result.class);
-
 
         MongoService mongoservice = new MongoService();
         mongoservice.mongoService(result);

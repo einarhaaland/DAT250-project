@@ -23,12 +23,13 @@ export default function CreatePoll(props) {
                 }
             })
             .then(() => {
-                fetch("https://dweet.io/dweet/for/dat250poller?" + question, {
+                fetch(`/results/${pollId}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        "Yes": yesVotes,
-                        "No": noVotes
+                        question : question,
+                        yes : yesVotes,
+                        no : noVotes
                     })
                 })
             })
@@ -47,7 +48,7 @@ export default function CreatePoll(props) {
         })
             .then(resp => resp.json())
             .then((data) => {
-                setTimeout( function() { handlePollResults(data.id); }, 1000*60); //time in ms
+                setTimeout( function() { handlePollResults(data.id); }, 1000*40); //time in ms
             })
     }
     
